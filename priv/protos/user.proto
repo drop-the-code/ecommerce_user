@@ -1,25 +1,50 @@
 syntax = "proto3";
+import "google/protobuf/empty.proto";
 
-// option java_multiple_files = true;
-// option java_package = "io.grpc.examples.helloworld";
-// option java_outer_classname = "HelloWorldProto";
-// option objc_class_prefix = "HLW";
-package user;
+package EcommerceUser;
 // The greeting service definition.
 service User {
   // Sends a greeting
-  rpc SayHello (UserRequest) returns (UserReply) {}
+  rpc create (UserRequest) returns (UserResponse) {}
+  rpc update (UserRequest) returns (UserResponse) {}
+  rpc delete (UserRequest) returns (UserResponse) {}
+  rpc selectAll(google.protobuf.Empty) returns (UserResponse) {}
+  rpc selectByID(UserID) returns (UserResponse) {}
+  rpc selectByName(UserName) returns (UserResponse) {}
+
 }
+
+message UserID {
+  string id = 1;
+}
+message UserName {
+  string name = 1;
+}
+
+
 
 // The request message containing the user's name.
 message UserRequest {
   string name = 1;
   string email = 2;
   string password = 3;
+  string cpf = 4;
+  string endereco = 5;
+  string cartao = 6;
+  enum role {
+    cliente = 0;
+    funcionario = 1;
+  }
 }
 
 // The response message containing the greetings
-message UserReply {
-  string name = 1;
-  string email = 2;
+message UserResponse{
+  string id =1;
+  string name = 2;
+  string email = 3;
+  string cartao = 4;
+  enum role {
+    cliente = 0;
+    funcionario = 1;
+  }
 }
