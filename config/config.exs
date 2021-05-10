@@ -5,4 +5,10 @@ use Mix.Config
 
 config :ecommerce_user, ecto_repos: [EcommerceUser.Repo]
 
+config :ecommerce_user , EcommerceUser.Repo ,
+migration_primary_key: [type: :binary_id],
+migration_foreign_key: [type: :binary_id]
+
+
+
 import_config "#{Mix.env}.exs"

@@ -1,18 +1,19 @@
 syntax = "proto3";
-import "google/protobuf/empty.proto";
+// import "google/protobuf/empty.proto";
 
 package EcommerceUser;
 // The greeting service definition.
-service User {
+service UserService {
   // Sends a greeting
-  rpc create (UserRequest) returns (UserResponse) {}
-  rpc update (UserRequest) returns (UserResponse) {}
-  rpc delete (UserRequest) returns (UserResponse) {}
-  rpc selectAll(google.protobuf.Empty) returns (UserResponse) {}
-  rpc selectByID(UserID) returns (UserResponse) {}
-  rpc selectByName(UserName) returns (UserResponse) {}
+  rpc create (UserRequest) returns (User) {}
+  rpc update (UserRequest) returns (User) {}
+  rpc delete (UserID) returns (User) {}
+  rpc select_all (empty) returns (UserList) {}
+  rpc select_by_id (UserID) returns (User) {}
+  rpc select_by_name (UserName) returns (User) {}
 
 }
+message empty{}
 
 message UserID {
   string id = 1;
@@ -22,29 +23,31 @@ message UserName {
 }
 
 
+enum Role {
+  cliente = 0;
+  funcionario = 1;
+}
 
 // The request message containing the user's name.
 message UserRequest {
-  string name = 1;
-  string email = 2;
-  string password = 3;
-  string cpf = 4;
-  string endereco = 5;
-  string cartao = 6;
-  enum role {
-    cliente = 0;
-    funcionario = 1;
-  }
+  User user = 1;
 }
-
-// The response message containing the greetings
-message UserResponse{
+message User {
   string id =1;
   string name = 2;
   string email = 3;
-  string cartao = 4;
-  enum role {
-    cliente = 0;
-    funcionario = 1;
-  }
+  string cpf = 5;
+  Role role = 6;
+  string address = 7;
+  string password = 8;
+  string card = 9;
+
+}
+
+message UserList {
+  repeated User  users = 1;
+}
+
+message UserResponse{
+  UserList users =1 ;
 }
