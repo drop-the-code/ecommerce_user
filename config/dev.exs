@@ -6,7 +6,7 @@ config :logger,
 
 
 config :ecommerce_user, EcommerceUser.Repo,
-database: "ecto_simple",
+database: "ecommerce_user_dev",
 username: "root",
 password: "root",
 hostname: "localhost",

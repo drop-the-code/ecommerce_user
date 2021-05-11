@@ -40,7 +40,15 @@ message User {
   Role role = 6;
   string address = 7;
   string password = 8;
-  string card = 9;
+  Card card = 9;
+
+}
+message Card {
+  string id= 1;
+  string name= 2;
+  int32 securityCode =3;
+  string validThru =4;
+  string number = 5;
 
 }
 

@@ -10,7 +10,7 @@ defmodule EcommerceUser.Repo.Migrations.Users do
       add :cpf , :string
       add :address , :string
       add :role , :string
-      add :card , :string
+
       timestamps()
     end
   end

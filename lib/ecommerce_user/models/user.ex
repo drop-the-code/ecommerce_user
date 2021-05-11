@@ -2,9 +2,10 @@ defmodule EcommerceUser.Models.User do
   use Ecto.Schema
   import Ecto.Changeset
   alias EcommerceUser.Repo
-  alias EcommerceUser.Models.User
+  alias EcommerceUser.Models.{User,Card}
   import Ecto.Query
   @primary_key {:id, :binary_id, autogenerate: true}
+  @foreign_key_type :binary_id
 
   schema "users" do
     field :name, :string
@@ -13,7 +14,7 @@ defmodule EcommerceUser.Models.User do
     field :cpf , :string
     field :address , :string
     field :role , Ecto.Enum, values: [:funcionario,:cliente]
-    field :card , :string
+    has_one :card ,  Card
 
     timestamps()
   end
