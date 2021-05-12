@@ -10,5 +10,4 @@ migration_primary_key: [type: :binary_id],
 migration_foreign_key: [type: :binary_id]
 
 
-
 import_config "#{Mix.env}.exs"

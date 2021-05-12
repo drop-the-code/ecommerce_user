@@ -4,8 +4,6 @@ defmodule EcommerceUser.User.Server do
   alias EcommerceUser.Models.User
 
   def create(request, _stream) do
-    IO.inspect(request.user)
-
     params =   %{
       card: request.user.cartao,
       cpf: request.user.cpf,

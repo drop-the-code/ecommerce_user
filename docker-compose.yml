@@ -1,0 +1,48 @@
+version: "3.7"
+services:
+    postgres:
+        image: postgres:latest
+        ports:
+            - 5432:5432
+        env_file:
+            - ./.env
+        networks:
+            net_postgres:
+                ipv4_address: 172.16.18.2
+    pgAdmin4:
+        image: dpage/pgadmin4
+        env_file:
+            - ./.env
+        depends_on:
+            - postgres
+        ports:
+            - 8080:80
+        networks:
+            net_postgres:
+                ipv4_address: 172.16.18.3
+
+    ecommerce_user:
+        build:
+            context: .
+            dockerfile: docker/Dockerfile.ecommerce_user
+        container_name: elixir
+        depends_on:
+            - postgres
+            - pgAdmin4
+        command: ["/opt/app/docker/wait-for-it.sh", "postgres", "mix", "grpc.server"]
+        env_file:
+            - ./.env
+        ports:
+            - 4000:4000
+        volumes:
+            - "./:/opt/app"
+        networks:
+            net_postgres:
+                ipv4_address: 172.16.18.4
+networks:
+    net_postgres:
+        driver: bridge
+        ipam:
+            driver: default
+            config:
+                - subnet: 172.16.18.0/24

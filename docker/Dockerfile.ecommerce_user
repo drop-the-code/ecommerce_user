@@ -1,0 +1,23 @@
+FROM elixir:latest
+
+ENV APP_HOME /opt/app
+
+WORKDIR $APP_HOME
+
+RUN mix local.hex --force \
+    && apt-get update \
+    && apt-get install -y apt-utils \
+    && apt-get install -y build-essential \
+    && apt-get install -y inotify-tools \
+    && mix local.rebar --force
+
+RUN apt update && apt install postgresql-client -y
+COPY . $APP_HOME
+
+RUN mix deps.get    
+
+RUN mkdir -p $APP_HOME
+
+EXPOSE 4000
+
+CMD ["/opt/app/docker/wait-for-it.sh", "postgres", "mix", "grpc.server"]
