@@ -64,7 +64,7 @@ defmodule EcommerceUser.User do
           role: EcommerceUser.Role.t(),
           address: String.t(),
           password: String.t(),
-          card: String.t()
+          card: EcommerceUser.Card.t() | nil
         }
   defstruct [:id, :name, :email, :cpf, :role, :address, :password, :card]
 
@@ -75,7 +75,27 @@ defmodule EcommerceUser.User do
   field :role, 6, type: EcommerceUser.Role, enum: true
   field :address, 7, type: :string
   field :password, 8, type: :string
-  field :card, 9, type: :string
+  field :card, 9, type: EcommerceUser.Card
+end
+
+defmodule EcommerceUser.Card do
+  @moduledoc false
+  use Protobuf, syntax: :proto3
+
+  @type t :: %__MODULE__{
+          id: String.t(),
+          name: String.t(),
+          securityCode: String.t(),
+          validThru: String.t(),
+          number: String.t()
+        }
+  defstruct [:id, :name, :securityCode, :validThru, :number]
+
+  field :id, 1, type: :string
+  field :name, 2, type: :string
+  field :securityCode, 3, type: :string
+  field :validThru, 4, type: :string
+  field :number, 5, type: :string
 end
 
 defmodule EcommerceUser.UserList do

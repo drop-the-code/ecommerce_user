@@ -16,7 +16,7 @@ defmodule EcommerceUser.Models.Card do
 
   def changeset(card, attrs) do
     card
-    |> cast(attrs, [:name, :securityCode, :validThru, :number])
-    |> validate_required([:name, :securityCode, :validThru, :number])
+    |> cast(attrs, [:name, :securityCode, :validThru, :number,:user_id])
+    |> validate_required([:name, :securityCode, :validThru, :number,:user_id])
   end
 end

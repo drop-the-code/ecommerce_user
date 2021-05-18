@@ -20,10 +20,24 @@ defmodule EcommerceUser.Repository.User do
   end
 
   def create_user(attrs \\ %{}) do
-    %User{}
-    |> User.changeset(attrs)
-    |> Repo.insert(returning: true)
+    userParams = Map.delete(attrs,:card)
+    try do
+    Repo.transaction(fn  ->
+
+      user = %User{}
+      |> User.changeset(userParams)
+      |> Repo.insert!(returning: [:name ,:address,:email,:cpf,:password,:role])
+
+        %Card{}
+      |> Card.changeset(attrs.card |> Map.put(:user_id , user.id))
+      |> Repo.insert!()
+
+      user |> Repo.preload(:card)
+    end)
+  rescue
+    raise_error -> {:error,raise_error}
   end
+end
 
   def update_user(%User{} = user, attrs) do
     user

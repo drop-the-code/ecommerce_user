@@ -33,7 +33,7 @@ services:
         env_file:
             - ./.env
         ports:
-            - 4000:4000
+            - 50051:50051
         volumes:
             - "./:/opt/app"
         networks:
