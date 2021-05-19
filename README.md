@@ -643,7 +643,7 @@ Esse projeto está sob licença. Veja o arquivo [LICENÇA](LICENSE) para mais de
 
   
 
-### Ajustes e melhorias
+<!-- ### Ajustes e melhorias
 
   
 
@@ -669,7 +669,7 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
 
 - [ ] Terminar prototipo para validação do mesmo
 
-  
+   -->
 
   
 
