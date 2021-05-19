@@ -63,32 +63,6 @@
 
   
 
-### Ajustes e melhorias
-
-  
-
-  
-
-O projeto ainda está em desenvolvimento e as próximas atualizações serão voltadas nas seguintes tarefas:
-
-  
-
-  
-
-- [ ] Autenticação
-
-  
-
-- [ ] Gestão de Eventos
-
-  
-
-- [ ] Credenciamento de Usuarios em eventos
-
-  
-
-- [ ] Terminar prototipo para validação do mesmo
-
   
 
   
