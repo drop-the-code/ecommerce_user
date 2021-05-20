@@ -4,18 +4,21 @@ defmodule EcommerceUser.Repository.User do
   alias EcommerceUser.Repo
 
   def list_all() do
-    query =
-      from(u in User,
-        select: %{
-          name: u.name,
-          email: u.email,
-          cpf: u.cpf,
-          cartao: u.cartao,
-          endereco: u.endereco,
-          role: u.role
-        }
-      )
-
+      user_join_card = from( user in User, join: card in Card , on: card.user_id == user.id)
+        query = from( [user,card] in user_join_card , select: %{
+          name: user.name,
+          address: user.address,
+          role: user.role,
+          cpf: user.cpf,
+          email: user.email,
+          password: user.password,
+          card: %{
+            name: card.name,
+            validThru: card.validThru,
+            securityCode:  card.securityCode,
+            number: card.number
+          }
+        })
     Repo.all(query)
   end
 
@@ -28,7 +31,7 @@ defmodule EcommerceUser.Repository.User do
       |> User.changeset(userParams)
       |> Repo.insert!(returning: [:name ,:address,:email,:cpf,:password,:role])
 
-        %Card{}
+      %Card{}
       |> Card.changeset(attrs.card |> Map.put(:user_id , user.id))
       |> Repo.insert!()
 

@@ -95,14 +95,12 @@ defmodule EcommerceUser.User.Server do
   end
 
   def selectall(_request,_stream) do
-    # allusers = User.list_all()
-    # IO.inspect(allusers)
-    # EcommerceUser.UserList.new(
-    #   users: allusers
-    # )
-    EcommerceUser.User.Error.new(
-      code: EcommerceUser.Error
+    allusers = UserRepository.list_all()
+    IO.inspect(allusers)
+    EcommerceUser.UserList.new(
+      users: allusers
     )
+
 
   end
 
