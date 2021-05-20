@@ -430,6 +430,38 @@ Agradecemos às seguintes pessoas que contribuíram para este projeto:
   
 
 </td>
+  
+  
+
+<td  align="center">
+
+  
+
+<a  href="#">
+
+  
+
+<img  src="https://avatars.githubusercontent.com/u/43496077?v=4"  width="100px;"  alt="Foto do Lucas Sandim no GitHub"/><br>
+
+  
+
+<sub>
+
+  
+
+<b>Lucas Sandim</b>
+
+  
+
+</sub>
+
+  
+
+</a>
+
+  
+
+</td>
 
   
 
