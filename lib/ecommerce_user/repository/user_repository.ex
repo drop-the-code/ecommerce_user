@@ -6,6 +6,7 @@ defmodule EcommerceUser.Repository.User do
   def list_all() do
       user_join_card = from( user in User, join: card in Card , on: card.user_id == user.id)
         query = from( [user,card] in user_join_card , select: %{
+          id: user.id,
           name: user.name,
           address: user.address,
           role: user.role,
@@ -13,6 +14,7 @@ defmodule EcommerceUser.Repository.User do
           email: user.email,
           password: user.password,
           card: %{
+            id: card.id,
             name: card.name,
             validThru: card.validThru,
             securityCode:  card.securityCode,
@@ -49,11 +51,21 @@ end
   end
 
   def delete_user(id) do
-    get_user!(id)
-    |> Repo.delete()
+    try do
+      get_user_id!(id)
+      |> Repo.delete()
+      rescue
+        raise_error -> {:error,raise_error}
+    end
   end
 
-  def get_user!(id) do
-    Repo.get!(User, id)
+  def get_user_id!(id) do
+    try do
+      Repo.get!(User, id) |> Repo.preload(:card)
+    rescue
+      raise_error -> {:error,raise_error}
+    end
   end
+
+
 end

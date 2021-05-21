@@ -10,7 +10,6 @@ service UserService {
   rpc delete (UserID) returns (User) {}
   rpc select_all (empty) returns (UserList) {}
   rpc select_by_id (UserID) returns (User) {}
-  rpc select_by_name (UserName) returns (User) {}
 
 }
 message empty{}

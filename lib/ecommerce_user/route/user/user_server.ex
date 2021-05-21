@@ -22,11 +22,12 @@ defmodule EcommerceUser.User.Server do
     }
     IO.inspect request.user.card
 
-    with {:ok, %User{} = user} <- UserRepository.create_user(params) do
+    with { :ok, %User{} = user} <- UserRepository.create_user(params) do
       EcommerceUser.User.new(
         %{
           id: user.id,
           card: EcommerceUser.Card.new(%{
+              id: user.card.id,
               name: user.card.name ,
               securityCode: user.card.securityCode ,
               number: user.card.number,
@@ -52,27 +53,34 @@ defmodule EcommerceUser.User.Server do
   end
 
   def update(request,_stream) do
-    IO.inspect(request)
     params =   %{
-      card: request.user.cartao,
+      card: %{
+        name: request.user.card.name ,
+        securityCode: request.user.card.securityCode,
+        validThru: request.user.card.validThru,
+        number: request.user.card.number
+      },
       cpf: request.user.cpf,
       email: request.user.email,
-      address: request.user.endereco,
+      address: request.user.address,
       name: request.user.name,
       password: request.user.password,
       role: request.user.role
     }
-    user = User.get_user!(request.user.id)
-    with {:ok, %User{} = user} <- User.update_user(user,params) do
+    user = UserRepository.get_user_id!(request.user.id)
+    with {:ok, %User{} = user} <- UserRepository.update_user(user,params) do
       EcommerceUser.User.new(
         %{
           id: user.id,
-          card: user.cartao,
+          card: %{
+
+          },
           name: user.name ,
           email:  user.email ,
           cpf:  user.cpf,
-          address: user.endereco,
-          role:  user.role
+          address: user.address,
+          role:  user.role,
+          password: user.password
         })
 
     end
@@ -80,21 +88,29 @@ defmodule EcommerceUser.User.Server do
 
   def delete(request,_stream) do
     IO.inspect(request)
-    with {:ok, %User{} = user} <- User.delete_user(request.user.id) do
+    with {:ok, %User{} = user} <- UserRepository.delete_user(request.id) do
       EcommerceUser.User.new(
         %{
-          id: user.id,
-          card: user.cartao,
-          name: user.name ,
-          email:  user.email ,
-          cpf:  user.cpf,
-          address: user.endereco,
-          role:  user.role
-        })
+        id: user.id,
+        card: EcommerceUser.Card.new(%{
+            id: user.card.id,
+            name: user.card.name ,
+            securityCode: user.card.securityCode ,
+            number: user.card.number,
+            validThru: user.card.validThru
+        }),
+        name: user.name ,
+        email:  user.email ,
+        cpf:  user.cpf,
+        address: user.address,
+        role:  user.role
+      })
+        else
+          {:error , _} -> raise GRPC.RPCError, status: GRPC.Status.not_found() , message: "user not found"
         end
   end
 
-  def selectall(_request,_stream) do
+  def select_all(_request,_stream) do
     allusers = UserRepository.list_all()
     IO.inspect(allusers)
     EcommerceUser.UserList.new(
@@ -104,10 +120,27 @@ defmodule EcommerceUser.User.Server do
 
   end
 
-  def selectByName(_request,_stream) do
-
-  end
-  def selectByID(_request,_stream) do
+  def select_by_id(request,_stream) do
+    with %User{} = user <- UserRepository.get_user_id!(request.id) do
+    EcommerceUser.User.new(
+      %{
+        id: user.id,
+        card: EcommerceUser.Card.new(%{
+            id: user.card.id,
+            name: user.card.name ,
+            securityCode: user.card.securityCode ,
+            number: user.card.number,
+            validThru: user.card.validThru
+        }),
+        name: user.name ,
+        email:  user.email ,
+        cpf:  user.cpf,
+        address: user.address,
+        role:  user.role
+      })
+    else
+      {:error , _ } -> raise GRPC.RPCError, status: GRPC.Status.not_found() , message: "user not found"
+    end
 
   end
 
