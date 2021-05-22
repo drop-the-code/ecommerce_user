@@ -49,29 +49,12 @@
 
   
 
-  
-
 <br>
-
-  
-
-  
 
 <h2  align="center"> 🚧 Microserviço para gestão de usuarios de um ecommerce 🚀 Em construção... 🚧</h4>
 
-  
-
-  
-
-  
-
-  
-
 ## 💻 Pré-requisitos
 
-  
-
-  
 
 Antes de começar, verifique se você atendeu aos seguintes requisitos:
 
@@ -100,171 +83,74 @@ Antes de começar, verifique se você atendeu aos seguintes requisitos:
 
 * Sistemas Operacionais compativeis `Windows / Linux / Mac`.
 
-  
-
-  
-
 <br>
 
-  
 
-  
+## 🚀 Instalando Microserviço Usuario
 
-## 🚀 Instalando Credenciamento
-
-  
-
-  
 
 <br>
-
-  
-
-  
 
 ### Passos que serão usadas para qualquer uma das opções
 
-  
 
 <br>
-
-  
-
-  
 
 #### Clone este repositório usando ssh ou https
 
-  
-
 ````
-
-  
-
 $ git clone https://github.com/drop-the-code/ecommerce_user.git
-
-  
-
 ````
-
-  
-
 #### Acesse a pasta do projeto no terminal/cmd
 
-  
-
 ```
-
-  
-
 $ cd ecommerce_user
 
-  
-
 ```
 
-  
-
-  
-
 <br>
-
-  
-
-  
 
 ### Para fazer build da imagem docker:
 
-  
 
 ```docker
 
-  
-
 $ docker build -f docker/dockerfile.prod -t user/name-image
 
-  
-
 ```
-
-  
 
 Aonde:
 
-  
 
 * User = Usuario dockerhub
 
-  
 
 * Name-image = Nome da imagem
 
-  
-
-  
 
 Para instalar o credenciamento , siga estas etapas:
 
-  
-
-  
-
 ### Com docker:
 
-  
-
-  
-
 <br>
-
-  
 
 ### Renomear o arquivo .env.example para .env
 
-  
-  
-
 ```
-
-  
-
 $ cp .env.example .env
 
-  
-
 ```
-
-  
-  
-
 #### Executa a aplicação em modo desenvolvimento
 
-  
-
-  
 
 ```
-
-  
 
 $ docker-compose up -d
 
-  
-
 ```
-
-  
-
-  
-
 ### Sem docker:
 
-  
-
-  
-
 <br>
-
-  
 
 ### Exportar as seguintes variaveis de ambiente
 
@@ -292,297 +178,147 @@ PGADMIN_DEFAULT_EMAIL
 
 PGADMIN_DEFAULT_PASSWORD
 
-  
 
 #### Instale as dependências
 
-  
 
 ```
-
-  
-
 $ mix deps install
 
-  
-
 ```
 
-  
-
-  
 
 #### Execute a aplicação em modo de desenvolvimento
 
-  
 
 ```
-
-  
-
 $ mix grpc.server
 
-  
-
 ```
-
-  
-
-  
 
 ## 🛠 Tecnologias
 
-  
-
-  
 
 As seguintes ferramentas foram usadas na construção do projeto:
 
-  
-
-  
 
 -  [Elixir](https://elixir-lang.org/)
 
-  
-
 -  [Elixir-grpc](https://github.com/elixir-grpc/grpc)
-
-  
 
 -  [Ecto](https://github.com/elixir-ecto/ecto)
 
-  
-  
-
 ## ☕ Usando credenciamento
-
-  
-
-  
 
 Para usar credenciamento, siga estas etapas:
 
-  
-
-  
 
 ```
-
-  
 
 acessar navegador no localhost:8080
 
-  
-
 ```
-
-  
 
 Futuramente adicionar imagens do projeto
 
-  
-
-  
-
 ## 🤝 Colaboradores
 
-  
 
 Agradecemos às seguintes pessoas que contribuíram para este projeto:
 
-  
 
 <table>
 
-  
-
 <tr>
 
-  
 
 <td  align="center">
 
-  
-
 <a  href="#">
-
-  
 
 <img  src="https://avatars2.githubusercontent.com/u/41531003?s=460&v=4"  width="100px;"  alt="Foto do Vinicius Espindola no GitHub"/><br>
 
-  
-
 <sub>
-
-  
 
 <b>Vinicius Espindola</b>
 
-  
-
 </sub>
-
-  
 
 </a>
 
-  
-
 </td>
-  
-  
 
 <td  align="center">
 
-  
-
 <a  href="#">
-
-  
 
 <img  src="https://avatars.githubusercontent.com/u/43496077?v=4"  width="100px;"  alt="Foto do Lucas Sandim no GitHub"/><br>
 
-  
-
 <sub>
-
-  
 
 <b>Lucas Sandim</b>
 
-  
-
 </sub>
-
-  
 
 </a>
 
-  
-
 </td>
-
-  
 
 </table>
 
-  
-
 <!--
-
-  
 
 <td align="center">
 
-  
-
 <a href="#">
-
-  
 
 <img src="https://s2.glbimg.com/FUcw2usZfSTL6yCCGj3L3v3SpJ8=/smart/e.glbimg.com/og/ed/f/original/2019/04/25/zuckerberg_podcast.jpg" width="100px;" alt="Foto do Mark Zuckerberg"/><br>
 
-  
-
 <sub>
-
-  
 
 <b>Mark Zuckerberg</b>
 
-  
-
 </sub>
-
-  
 
 </a>
 
-  
-
 </td>
-
-  
 
 <td align="center">
 
-  
-
 <a href="#">
 
-  
-
 <img src="https://miro.medium.com/max/360/0*1SkS3mSorArvY9kS.jpg" width="100px;" alt="Foto do Steve Jobs"/><br>
-
-  
-
 <sub>
-
-  
 
 <b>Steve Jobs</b>
 
-  
-
 </sub>
-
-  
 
 </a>
 
-  
-
 </td>
-
-  
 
 </tr>
 
-  
-
 </table>
 
-  
-
 -->
-
-  
 
 <!--
 
-  
-
 ## 😄 Seja um dos contribuidores<br>
 
-  
 
 Quer fazer parte desse projeto? Clique [AQUI](CONTRIBUTING.md) e leia como contribuir.
 
-  
-
 -->
-
-  
-
-  
 
 <br>
 
-  
-
-  
-
 ## :balance_scale: Licença
-
-  
-
-  
 
 Esse projeto está sob licença. Veja o arquivo [LICENÇA](LICENSE) para mais detalhes.
 
-  
-
-  
 
 [⬆ Voltar ao topo](#Gestão-de-Usuarios-simples-de-um-Ecommerce)
