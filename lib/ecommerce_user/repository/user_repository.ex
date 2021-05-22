@@ -2,6 +2,7 @@ defmodule EcommerceUser.Repository.User do
   import Ecto.Query
   alias EcommerceUser.Models.{User, Card}
   alias EcommerceUser.Repo
+  alias EcommerceUser.Repository.Card , as: CardRepository
 
   def list_all() do
       user_join_card = from( user in User, join: card in Card , on: card.user_id == user.id)
@@ -44,10 +45,23 @@ defmodule EcommerceUser.Repository.User do
   end
 end
 
-  def update_user(%User{} = user, attrs) do
-    user
-    |> User.changeset(attrs)
-    |> Repo.update()
+  def update_user(attrs) do
+    userParams = Map.delete(attrs,:card)
+    try do
+    Repo.transaction(fn ->
+      user = get_user_id!(userParams.id)
+      |> User.changeset(userParams)
+      |> Repo.update!()
+      CardRepository.get_card_id!(user.id)
+      |> Card.changeset(attrs.card)
+      |> Repo.update!()
+
+      user |> Repo.preload(:card, force: true)
+
+    end)
+    rescue
+      raise_error -> {:error,raise_error}
+    end
   end
 
   def delete_user(id) do

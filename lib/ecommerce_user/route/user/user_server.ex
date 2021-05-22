@@ -54,7 +54,9 @@ defmodule EcommerceUser.User.Server do
 
   def update(request,_stream) do
     params =   %{
+      id: request.user.id,
       card: %{
+        id: request.user.card.id,
         name: request.user.card.name ,
         securityCode: request.user.card.securityCode,
         validThru: request.user.card.validThru,
@@ -67,14 +69,18 @@ defmodule EcommerceUser.User.Server do
       password: request.user.password,
       role: request.user.role
     }
-    user = UserRepository.get_user_id!(request.user.id)
-    with {:ok, %User{} = user} <- UserRepository.update_user(user,params) do
+    with {:ok, %User{} = user} <- UserRepository.update_user(params) do
+      IO.inspect(user)
       EcommerceUser.User.new(
         %{
           id: user.id,
-          card: %{
-
-          },
+          card: EcommerceUser.Card.new(%{
+            id: user.card.id,
+            name: user.card.name ,
+            securityCode: user.card.securityCode ,
+            number: user.card.number,
+            validThru: user.card.validThru
+        }),
           name: user.name ,
           email:  user.email ,
           cpf:  user.cpf,
@@ -82,8 +88,13 @@ defmodule EcommerceUser.User.Server do
           role:  user.role,
           password: user.password
         })
+          else
+            {:error, %Ecto.InvalidChangesetError{} = invalidChangeset} ->
+              message = User.changeset_error_to_string(invalidChangeset.changeset)
+              raise GRPC.RPCError, status: GRPC.Status.invalid_argument() , message: message
 
     end
+
   end
 
   def delete(request,_stream) do
