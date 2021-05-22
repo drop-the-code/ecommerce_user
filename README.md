@@ -105,7 +105,6 @@ $ git clone https://github.com/drop-the-code/ecommerce_user.git
 
 ```
 $ cd ecommerce_user
-
 ```
 
 <br>
@@ -114,9 +113,7 @@ $ cd ecommerce_user
 
 
 ```docker
-
 $ docker build -f docker/dockerfile.prod -t user/name-image
-
 ```
 
 Aonde:
@@ -138,15 +135,12 @@ Para instalar o credenciamento , siga estas etapas:
 
 ```
 $ cp .env.example .env
-
 ```
 #### Executa a aplicação em modo desenvolvimento
 
 
 ```
-
 $ docker-compose up -d
-
 ```
 ### Sem docker:
 
@@ -154,11 +148,7 @@ $ docker-compose up -d
 
 ### Exportar as seguintes variaveis de ambiente
 
-```
-
 DB_USER
-
-```
 
 DB_PASSWORD
 
@@ -208,16 +198,10 @@ As seguintes ferramentas foram usadas na construção do projeto:
 
 -  [Ecto](https://github.com/elixir-ecto/ecto)
 
-## ☕ Usando credenciamento
-
-Para usar credenciamento, siga estas etapas:
+## ☕ Testando Microserviço Usuario
 
 
-```
-
-acessar navegador no localhost:8080
-
-```
+Como este software usa GRPC para comunicação  pode ser fazer um client, usar a biblioteca [grpcurl](https://github.com/fullstorydev/grpcurl) ou usar o insomnia
 
 Futuramente adicionar imagens do projeto
 
