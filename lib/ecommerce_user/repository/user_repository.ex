@@ -81,5 +81,25 @@ end
     end
   end
 
-
+  def get_user_email!(email,password)  do
+    query = from user in User, join: card in Card , on: card.user_id == user.id, where: user.email == ^email , select: %{
+      id: user.id,
+      name: user.name,
+      address: user.address,
+      role: user.role,
+      cpf: user.cpf,
+      email: user.email,
+      password: user.password,
+      card: %{
+        id: card.id,
+        name: card.name,
+        validThru: card.validThru,
+        securityCode:  card.securityCode,
+        number: card.number
+      }
+    }
+    user = Repo.one(query)
+    IO.inspect User.compare_password(user.password,password)
+    if User.compare_password(user.password,password) , do: user, else: nil
+  end
 end

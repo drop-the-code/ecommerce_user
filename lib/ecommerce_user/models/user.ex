@@ -26,6 +26,7 @@ defmodule EcommerceUser.Models.User do
     |> cast(attrs, [:name, :email, :cpf, :address, :role, :password])
     |> validate_required([:name, :email, :cpf, :address, :role])
     |> validate_format(:email,~r/@/)
+    |> unique_constraint(:unique_email , name: :unique_email , message: "email already in use")
     |> put_password_hash()
   end
 
@@ -49,4 +50,9 @@ defmodule EcommerceUser.Models.User do
       "#{acc}#{k}: #{joined_errors}\n"
     end)
   end
+
+  def compare_password(hashpass, pass) do
+     Bcrypt.verify_pass(pass,hashpass)
+  end
+
 end

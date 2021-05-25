@@ -13,6 +13,8 @@ defmodule EcommerceUser.Repo.Migrations.Users do
 
       timestamps()
     end
+
+    create unique_index(:users, [:email] , name: :unique_email)
   end
 end
 

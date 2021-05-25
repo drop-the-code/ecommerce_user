@@ -105,6 +105,7 @@ $ git clone https://github.com/drop-the-code/ecommerce_user.git
 
 ```
 $ cd ecommerce_user
+
 ```
 
 <br>
@@ -113,7 +114,9 @@ $ cd ecommerce_user
 
 
 ```docker
+
 $ docker build -f docker/dockerfile.prod -t user/name-image
+
 ```
 
 Aonde:
@@ -135,12 +138,15 @@ Para instalar o credenciamento , siga estas etapas:
 
 ```
 $ cp .env.example .env
+
 ```
 #### Executa a aplicação em modo desenvolvimento
 
 
 ```
+
 $ docker-compose up -d
+
 ```
 ### Sem docker:
 
@@ -174,6 +180,7 @@ PGADMIN_DEFAULT_PASSWORD
 
 ```
 $ mix deps install
+
 ```
 
 
@@ -182,6 +189,7 @@ $ mix deps install
 
 ```
 $ mix grpc.server
+
 ```
 
 ## 🛠 Tecnologias
@@ -196,12 +204,12 @@ As seguintes ferramentas foram usadas na construção do projeto:
 
 -  [Ecto](https://github.com/elixir-ecto/ecto)
 
-## ☕ Testando Microserviço Usuario
+## ☕ Testando  o Microserviço Usuario
 
+para teste desse microserviço recomenda-se o uso do [grpcurl](https://github.com/fullstorydev/grpcurl) ou usar o insomnia
 
-Como este software usa GRPC para comunicação  pode ser fazer um client, usar a biblioteca [grpcurl](https://github.com/fullstorydev/grpcurl) ou usar o insomnia
+d
 
-[![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=API%20GRPC%20USER&uri=https%3A%2F%2Fgithub.com%2Fdrop-the-code%2Fecommerce_user%2Fblob%2Fmain%2Finsomnia_workspace.json)
 
 ## 🤝 Colaboradores
 

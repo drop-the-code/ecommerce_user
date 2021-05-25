@@ -16,6 +16,34 @@ defmodule EcommerceUser.Empty do
   defstruct []
 end
 
+defmodule EcommerceUser.LoginResponse do
+  @moduledoc false
+  use Protobuf, syntax: :proto3
+
+  @type t :: %__MODULE__{
+          user: EcommerceUser.User.t() | nil,
+          match_password: boolean
+        }
+  defstruct [:user, :match_password]
+
+  field :user, 1, type: EcommerceUser.User
+  field :match_password, 2, type: :bool
+end
+
+defmodule EcommerceUser.LoginRequest do
+  @moduledoc false
+  use Protobuf, syntax: :proto3
+
+  @type t :: %__MODULE__{
+          email: String.t(),
+          password: String.t()
+        }
+  defstruct [:email, :password]
+
+  field :email, 1, type: :string
+  field :password, 2, type: :string
+end
+
 defmodule EcommerceUser.UserID do
   @moduledoc false
   use Protobuf, syntax: :proto3
@@ -131,7 +159,7 @@ defmodule EcommerceUser.UserService.Service do
   rpc :delete, EcommerceUser.UserID, EcommerceUser.User
   rpc :select_all, EcommerceUser.Empty, EcommerceUser.UserList
   rpc :select_by_id, EcommerceUser.UserID, EcommerceUser.User
-  rpc :select_by_name, EcommerceUser.UserName, EcommerceUser.User
+  rpc :select_by_email, EcommerceUser.LoginRequest, EcommerceUser.LoginResponse
 end
 
 defmodule EcommerceUser.UserService.Stub do

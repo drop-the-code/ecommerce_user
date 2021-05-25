@@ -4,6 +4,15 @@ defmodule EcommerceUser.User.Server do
   alias EcommerceUser.Repository.User , as: UserRepository
   alias EcommerceUser.Models.User
 
+  @moduledoc """
+    Implementações das funçoes (contratos)  do GRPC que estão definidos no arquivo priv/protos/user.proto
+  """
+
+@doc """
+  função para execução da criação de um novo usuario sendo ele um funcionario , ou cliente
+  seguindo o arquivo que esta priv/protos/user.proto
+
+"""
   def create(request, _stream) do
     # raise GRPC.RPCError, status: :permission_denied
     params =   %{
@@ -153,6 +162,37 @@ defmodule EcommerceUser.User.Server do
       {:error , _ } -> raise GRPC.RPCError, status: GRPC.Status.not_found() , message: "user not found"
     end
 
+  end
+
+  def select_by_email(request,_stream) do
+      user = UserRepository.get_user_email!(request.email,request.password)
+      IO.inspect user
+      if user != nil do
+        EcommerceUser.LoginResponse.new(%{
+          user: EcommerceUser.User.new(%{
+            id: user.id,
+            card: EcommerceUser.Card.new(%{
+                id: user.card.id,
+                name: user.card.name ,
+                securityCode: user.card.securityCode ,
+                number: user.card.number,
+                validThru: user.card.validThru
+            }),
+            name: user.name ,
+            email:  user.email ,
+            cpf:  user.cpf,
+            address: user.address,
+            role:  user.role
+          }),
+          match_password: true
+        })
+        else
+          EcommerceUser.LoginResponse.new(
+            user: EcommerceUser.User.new(%{}),
+            match_password: false
+          )
+
+      end
   end
 
 
