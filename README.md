@@ -115,12 +115,20 @@ $ cd ecommerce_user
 
 ```docker
 
-$ docker build -f docker/dockerfile.prod -t user/name-image
+$ docker build -f docker/dockerfile.prod -t user/name-image .
+
+```
+### Adicionar tag na imagem docker:
+
+```docker
+
+$ docker tag  <id-image> user/name-image .
 
 ```
 
 Aonde:
 
+* id-image =  id da imagem gerada no comando docker build
 
 * User = Usuario dockerhub
 
