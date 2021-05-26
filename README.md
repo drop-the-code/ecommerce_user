@@ -136,7 +136,7 @@ Aonde:
 * Name-image = Nome da imagem
 
 
-Para instalar o credenciamento , siga estas etapas:
+Para instalar o microserviço , siga estas etapas:
 
 ### Com docker:
 
