@@ -3,7 +3,7 @@ services:
     postgres:
         image: postgres:latest
         ports:
-            - 5432:5432
+            - ${DB_PORT}:${DB_PORT}
         env_file:
             - ./.env
         networks:
@@ -29,11 +29,10 @@ services:
         depends_on:
             - postgres
             - pgAdmin4
-        command: ["/opt/app/docker/wait-for-it.sh", "postgres", "mix", "grpc.server"]
         env_file:
             - ./.env
         ports:
-            - 50051:50051
+            - ${GRPC_PORT}:${GRPC_PORT}
         volumes:
             - "./:/opt/app"
         networks:
