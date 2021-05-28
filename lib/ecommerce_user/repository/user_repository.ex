@@ -5,7 +5,7 @@ defmodule EcommerceUser.Repository.User do
   alias EcommerceUser.Repository.Card , as: CardRepository
 
   def list_all() do
-      user_join_card = from( user in User, join: card in Card , on: card.user_id == user.id)
+      user_join_card = from( user in User, left_join: card in Card , on: card.user_id == user.id)
         query = from( [user,card] in user_join_card , select: %{
           id: user.id,
           name: user.name,
@@ -25,7 +25,7 @@ defmodule EcommerceUser.Repository.User do
     Repo.all(query)
   end
 
-  def create_user(attrs \\ %{}) do
+  def create_user_with_card(attrs \\ %{}) do
     userParams = Map.delete(attrs,:card)
     try do
     Repo.transaction(fn  ->
@@ -33,17 +33,19 @@ defmodule EcommerceUser.Repository.User do
       user = %User{}
       |> User.changeset(userParams)
       |> Repo.insert!(returning: [:name ,:address,:email,:cpf,:password,:role])
-
-      %Card{}
-      |> Card.changeset(attrs.card |> Map.put(:user_id , user.id))
-      |> Repo.insert!()
-
+      if ! Map.equal?(attrs.card , %{ name: "", number: "" , securityCode: "", validThru: "" }) do
+        %Card{}
+        |> Card.changeset(attrs.card |> Map.put(:user_id , user.id))
+        |> Repo.insert!()
+      end
       user |> Repo.preload(:card)
+
     end)
   rescue
     raise_error -> {:error,raise_error}
   end
 end
+
 
   def update_user(attrs) do
     userParams = Map.delete(attrs,:card)
@@ -52,10 +54,12 @@ end
       user = get_user_id!(userParams.id)
       |> User.changeset(userParams)
       |> Repo.update!()
-      CardRepository.get_card_id!(user.id)
+      if ! Map.equal?(attrs.card , %{ id: "" , name: "", number: "" , securityCode: "", validThru: "" }) do
+
+      CardRepository.get_card_from_user_id!(user.id)
       |> Card.changeset(attrs.card)
       |> Repo.update!()
-
+      end
       user |> Repo.preload(:card, force: true)
 
     end)
