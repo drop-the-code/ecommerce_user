@@ -7,8 +7,8 @@ services:
         env_file:
             - ./.env
         networks:
-            net_postgres:
-                ipv4_address: 172.16.18.2
+            net_ecommerce_user:
+                ipv4_address: 172.16.101.2
     pgAdmin4:
         image: dpage/pgadmin4
         env_file:
@@ -18,8 +18,8 @@ services:
         ports:
             - 8080:80
         networks:
-            net_postgres:
-                ipv4_address: 172.16.18.3
+            net_ecommerce_user:
+                ipv4_address: 172.16.101.3
 
     ecommerce_user:
         build:
@@ -36,12 +36,12 @@ services:
         volumes:
             - "./:/opt/app"
         networks:
-            net_postgres:
-                ipv4_address: 172.16.18.4
+            net_ecommerce_user:
+                ipv4_address: 172.16.101.4
 networks:
-    net_postgres:
+    net_ecommerce_user:
         driver: bridge
         ipam:
             driver: default
             config:
-                - subnet: 172.16.18.0/24
+                - subnet: 172.16.101.0/24
