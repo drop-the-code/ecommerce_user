@@ -86,7 +86,7 @@ end
   end
 
   def get_user_email!(email,password)  do
-    query = from user in User, join: card in Card , on: card.user_id == user.id, where: user.email == ^email , select: %{
+    query = from user in User, left_join: card in Card , on: card.user_id == user.id, where: user.email == ^email , select: %{
       id: user.id,
       name: user.name,
       address: user.address,
